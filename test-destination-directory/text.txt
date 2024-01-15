@@ -1,0 +1,1 @@
+Folders will be created in this directory, and your images will be copied here.
