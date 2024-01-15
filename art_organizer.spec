@@ -2,7 +2,7 @@
 
 
 a = Analysis(
-    ['ai_image_organizer.py'],
+    ['art_organizer.py'],
     pathex=[],
     binaries=[],
     datas=[],
@@ -21,7 +21,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='ai_image_organizer',
+    name='art_organizer',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
