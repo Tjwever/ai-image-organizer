@@ -1,7 +1,6 @@
 import os
 import shutil
 from PIL import Image
-# from tkinter import *
 import tkinter as tk
 from tkinter import filedialog
 
@@ -54,15 +53,6 @@ def process_images_in_folder(source_folder, destination_folder):
 
                 move_image_to_folder(image_path, checkpoint, destination_folder)
 
-# def main():
-#     source_folder = "test-source-directory"
-#     destination_folder = "test-destination-directory"
-    
-#     process_images_in_folder(source_folder, destination_folder)
-
-# if __name__ == "__main__":
-#     main()
-
 def on_select_source_folder():
     source_folder_var.set(filedialog.askdirectory())
 
@@ -75,21 +65,51 @@ def on_process():
 
     process_images_in_folder(source_folder, destination_folder)
 
-#  # Future GUI setup
+# GUI setup
 root = tk.Tk()
 root.title("AI Image Organization App")
+
+root.configure(bg="#323232")
 
 source_folder_var = tk.StringVar()
 destination_folder_var = tk.StringVar()
 
-tk.Label(root, text="Source Folder:").pack()
-tk.Entry(root, textvariable=source_folder_var, width=50).pack()
-tk.Button(root, text="Select Source Folder", command=on_select_source_folder).pack()
+frame_title = tk.Frame(root, width=10, height=75, bg='#323232')
+frame_title.pack(fill=tk.X)
 
-tk.Label(root, text="Destination Folder:").pack()
-tk.Entry(root, textvariable=destination_folder_var, width=50).pack()
-tk.Button(root, text="Select Destination Folder", command=on_select_destination_folder).pack()
+title_label = tk.Label(frame_title, text="AI Image Organization App", font=("Arial", 18), bg='#323232', fg='#b6b6b6')
+title_label.pack(side=tk.LEFT, padx=5)
 
-tk.Button(root, text="Process Images", command=on_process).pack()
+title_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+
+# Frame for Source Folder
+frame_source = tk.Frame(root, padx=10, pady=10, bg='#323232')
+frame_source.pack(fill=tk.X)
+
+tk.Label(frame_source, text="Source Folder:", font=("Arial", 12), bg='#323232', fg='#b6b6b6').pack(side=tk.LEFT, padx=5)
+entry_source = tk.Entry(frame_source, textvariable=source_folder_var, width=40, font=("Arial", 12), bg='#b6b6b6', fg='#1b1a1b', border=0)
+entry_source.pack(side=tk.LEFT, padx=35)
+tk.Button(frame_source, text="Select", command=on_select_source_folder, font=("Arial", 12), bg='#b6b6b6', fg='#1b1b1b').pack(side=tk.LEFT, padx=0)
+
+# Frame for Destination Folder
+frame_destination = tk.Frame(root, padx=10, pady=10, bg='#323232')
+frame_destination.pack(fill=tk.X)
+
+tk.Label(frame_destination, text="Destination Folder:", font=("Arial", 12), bg='#323232', fg='#b6b6b6').pack(side=tk.LEFT, padx=5)
+entry_destination = tk.Entry(frame_destination, textvariable=destination_folder_var, width=40, font=("Arial", 12), bg='#b6b6b6', fg='#1b1a1b', border=0)
+entry_destination.pack(side=tk.LEFT, padx=5)
+tk.Button(frame_destination, text="Select", command=on_select_destination_folder, font=("Arial", 12), bg='#b6b6b6', fg='#1b1b1b').pack(side=tk.LEFT, padx=30)
+
+# Process Button
+tk.Button(root, text="Process Images", command=on_process, font=("Arial", 14), bg="#48889c", fg="white", relief=tk.GROOVE, width=15, height=2).pack(pady=20)
 
 root.mainloop()
+
+# def main():
+#     source_folder = "test-source-directory"
+#     destination_folder = "test-destination-directory"
+    
+#     process_images_in_folder(source_folder, destination_folder)
+
+# if __name__ == "__main__":
+#     main()
