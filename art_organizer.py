@@ -1,8 +1,9 @@
 import os
 import shutil
 from PIL import Image
-# import tkinter as tk
-# from tkinter import filedialog
+# from tkinter import *
+import tkinter as tk
+from tkinter import filedialog
 
 def get_checkpoint_from_image(image_path):
     # Implement your logic to extract model/checkpoint information
@@ -53,30 +54,42 @@ def process_images_in_folder(source_folder, destination_folder):
 
                 move_image_to_folder(image_path, checkpoint, destination_folder)
 
-def main():
-    source_folder = "test-source-directory"
-    destination_folder = "test-destination-directory"
+# def main():
+#     source_folder = "test-source-directory"
+#     destination_folder = "test-destination-directory"
     
+#     process_images_in_folder(source_folder, destination_folder)
+
+# if __name__ == "__main__":
+#     main()
+
+def on_select_source_folder():
+    source_folder_var.set(filedialog.askdirectory())
+
+def on_select_destination_folder():
+    destination_folder_var.set(filedialog.askdirectory())
+
+def on_process():
+    source_folder = source_folder_var.get()
+    destination_folder = destination_folder_var.get()
+
     process_images_in_folder(source_folder, destination_folder)
 
-if __name__ == "__main__":
-    main()
-
 #  # Future GUI setup
-# root = tk.Tk()
-# root.title("Image Processing App")
+root = tk.Tk()
+root.title("AI Image Organization App")
 
-# source_folder_var = tk.StringVar()
-# destination_folder_var = tk.StringVar()
+source_folder_var = tk.StringVar()
+destination_folder_var = tk.StringVar()
 
-# tk.Label(root, text="Source Folder:").pack()
-# tk.Entry(root, textvariable=source_folder_var, width=50).pack()
-# tk.Button(root, text="Select Source Folder", command=on_select_source_folder).pack()
+tk.Label(root, text="Source Folder:").pack()
+tk.Entry(root, textvariable=source_folder_var, width=50).pack()
+tk.Button(root, text="Select Source Folder", command=on_select_source_folder).pack()
 
-# tk.Label(root, text="Destination Folder:").pack()
-# tk.Entry(root, textvariable=destination_folder_var, width=50).pack()
-# tk.Button(root, text="Select Destination Folder", command=on_select_destination_folder).pack()
+tk.Label(root, text="Destination Folder:").pack()
+tk.Entry(root, textvariable=destination_folder_var, width=50).pack()
+tk.Button(root, text="Select Destination Folder", command=on_select_destination_folder).pack()
 
-# tk.Button(root, text="Process Images", command=on_process).pack()
+tk.Button(root, text="Process Images", command=on_process).pack()
 
-# root.mainloop()
+root.mainloop()
