@@ -54,8 +54,8 @@ def process_images_in_folder(source_folder, destination_folder):
                 move_image_to_folder(image_path, checkpoint, destination_folder)
 
 def main():
-    source_folder = "YourPathHere"
-    destination_folder = "YourPathHere"
+    source_folder = "test-source-directory"
+    destination_folder = "test-destination-directory"
     
     process_images_in_folder(source_folder, destination_folder)
 
