@@ -1,33 +1,32 @@
 # AI Image Organizer (Stable Diffusion)
 
-### This script is simply for organizing all of your generated images that are usually located in your output directory
+### A script to effortlessly organize your generated images within the output directory 📸
 
 ---
 
-#### Why did I create this script
+#### Why did I create this script? 🤔
 
-<p>
-It's nice when all of you images are in the same place, but if you're anything like me who uses more than one checkpoint and you have no idea which one is which, then organization is key.  It's possible to organize all this yourself with the PNG Info tab within Stable Diffusion, but if you have to go through hundreds of images this'll take a long time.  This is why I've written a script to help automate this process.
-</p>
+It's great when all your images are in one place, but if you're like me, using multiple checkpoints can get confusing. Enter organization! While you can manually organize with the PNG Info tab within Stable Diffusion, it's a tedious task for hundreds of images. That's why I've crafted a script to automate this process.
 
-#### What it does
+#### How to run it 🛠️
 
-<p>
-When you run the script/executable file, a GUI window will appear with two input fields, the source directory and the destination directory.  When you select the source directory (usually the folder with all the png files) and the destination directory (the folder you want those images to navigate to), all you have to do is press the Process button, and the script will copy all the image from the source directory and place them into their respective folders within the chosen destination.
-</p>
+If you're a Python pro, fire up your virtual environment, install packages from requirements.txt, and run the script. For non-developers, don't sweat it!
 
-#### How to run it
+- Download the repo 📥
+- Double-click the art_organizer.exe file 🖱️
+- Ensure the _internal directory is in the same location as art_organizer.exe for it to work.
 
-<p>
-If you have familiarity with Python, you run your virtual environment, install your packages from the requirements.txt file, and simply run the script.  With Windows or Linux (doesn't work with WSL2 unless you have a graphics library installed, haven't tested with Mac) a GUI interface should appear
-</p>
+#### How to use it 🚀
 
-<p>
-If you have no experience with Python or aren't a developer, not to worry!  I got you covered.
-</p>
+After running the script/executable file, and a user-friendly GUI window will pop up with two input fields: source directory and destination directory. Select your source (folder with PNG files) and destination, hit the Process button, and voila! The script will neatly organize the images into their respective folders within the chosen destination.
 
-<p>
-Download the repo, and just double click with exe file within the dist folder.
-</p>
+#### What the future holds 🚀
 
-#### What the future holds
+While the current setup may be a bit complex for non-Python folks, I'm considering switching to cx_freeze for a simpler experience. The goal is to make this app as user-friendly as possible.
+
+- **Future Features** 🚀
+  - Simplify setup with a one-click app 🌐
+  - Add customization options for users 🎨
+    - Grouping by prompt keywords, Sampler, Lora, etc.
+
+Feel free to contribute and make this image organizing tool even better! 🤖✨
