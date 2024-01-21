@@ -5,18 +5,13 @@ import tkinter as tk
 from tkinter import filedialog
 
 def get_checkpoint_from_image(image_path):
-    # Implement your logic to extract model/checkpoint information
     def get_model_from_metadata(image_path):
         with Image.open(image_path) as img:
             metadata = img.info
 
-        # Extract the 'parameters' string from the metadata dictionary
         parameters_string = metadata.get('parameters', '')
-
-        # Search for 'Model: ' in the parameters string
         model_start = parameters_string.find('Model: ')
         if model_start != -1:
-            # If 'Model: ' is found, extract the substring after it until the next comma or the end of the string
             model_end = parameters_string.find(',', model_start)
             if model_end == -1:
                 model_end = len(parameters_string)
@@ -32,26 +27,44 @@ def get_checkpoint_from_image(image_path):
         return model
     else:
         print("Model information not found in metadata.")
+        return None
 
-def move_image_to_folder(image_path, checkpoint, destination_folder):
+def move_image_to_folder(image_path, checkpoint, destination_folder, not_copied_label):
     destination_folder = os.path.join(destination_folder, f"{checkpoint}_Folder")
     if not os.path.exists(destination_folder):
         os.makedirs(destination_folder)
 
     destination_path = os.path.join(destination_folder, os.path.basename(image_path))
     
-    shutil.copy(image_path, destination_path)
-    print(f"Copied and moved {image_path} to {destination_path}")
+    try:
+        shutil.copy(image_path, destination_path)
+        print(f"Copied and moved {image_path} to {destination_path}")
+    except Exception as e:
+        not_copied_label.config(text=f"Warning: {str(e)}\nImage not copied: {image_path}")
 
-def process_images_in_folder(source_folder, destination_folder):
-    for root, _, files in os.walk(source_folder):
-        for filename in files:
-            if filename.endswith(".png"):
-                image_path = os.path.join(root, filename)
+def process_images_in_folder(source_folder, destination_folder, not_copied_label):
+    images_without_metadata = []
 
-                checkpoint = get_checkpoint_from_image(image_path)
+    try:
+        for root, _, files in os.walk(source_folder):
+            for filename in files:
+                if filename.endswith(".png"):
+                    image_path = os.path.join(root, filename)
 
-                move_image_to_folder(image_path, checkpoint, destination_folder)
+                    checkpoint = get_checkpoint_from_image(image_path)
+
+                    if checkpoint is not None:
+                        move_image_to_folder(image_path, checkpoint, destination_folder, not_copied_label)
+                    else:
+                        images_without_metadata.append(filename)
+
+        if images_without_metadata:
+            warning_message = "Warning: Metadata not found for the following images:\n"
+            warning_message += "\n".join(images_without_metadata)
+            not_copied_label.config(text=warning_message)
+
+    except Exception as e:
+        not_copied_label.config(text=f"Error: {str(e)}")
 
 def on_select_source_folder():
     source_folder_var.set(filedialog.askdirectory())
@@ -59,11 +72,13 @@ def on_select_source_folder():
 def on_select_destination_folder():
     destination_folder_var.set(filedialog.askdirectory())
 
-def on_process():
+def on_process(not_copied_label):
     source_folder = source_folder_var.get()
     destination_folder = destination_folder_var.get()
 
-    process_images_in_folder(source_folder, destination_folder)
+    not_copied_label.config(text="")
+
+    process_images_in_folder(source_folder, destination_folder, not_copied_label)
 
 # GUI setup
 root = tk.Tk()
@@ -101,15 +116,11 @@ entry_destination.pack(side=tk.LEFT, padx=5)
 tk.Button(frame_destination, text="Select", command=on_select_destination_folder, font=("Arial", 12), bg='#b6b6b6', fg='#1b1b1b').pack(side=tk.LEFT, padx=30)
 
 # Process Button
-tk.Button(root, text="Process Images", command=on_process, font=("Arial", 14), bg="#48889c", fg="white", relief=tk.GROOVE, width=15, height=2).pack(pady=20)
+process_button = tk.Button(root, text="Process Images", command=lambda: on_process(not_copied_label), font=("Arial", 14), bg="#48889c", fg="white", relief=tk.GROOVE, width=15, height=2)
+process_button.pack(pady=20)
+
+# Label for not copied images
+not_copied_label = tk.Label(root, text="", font=("Arial", 12), bg='#323232', fg='orange')
+not_copied_label.pack()
 
 root.mainloop()
-
-# def main():
-#     source_folder = "test-source-directory"
-#     destination_folder = "test-destination-directory"
-    
-#     process_images_in_folder(source_folder, destination_folder)
-
-# if __name__ == "__main__":
-#     main()
